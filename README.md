@@ -22,13 +22,21 @@ yarn
 npm install --save vue-audio-visual
 ```
 
-### Use plugin
+### Use Audio plugin
 
 Install plugin in main.js:
 
 ```sh
-import { AVPlugin } from "vue-audio-visual";
+import { createApp } from 'vue'
+import App from './App.vue'
+import { AVPlugin } from 'vue-audio-visual'
+
+const app = createApp(App)
+app.use(AVPlugin)
+
+app.mount('#app')
 ```
+Know More Audio Plugin [Click here](https://www.npmjs.com/package/vue-audio-visual#install)
 
 ### Compile and Hot-Reload for Development
 
