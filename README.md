@@ -16,6 +16,20 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 yarn
 ```
 
+### Vue Audio Visual Plugin
+
+```sh
+npm install --save vue-audio-visual
+```
+
+### Use plugin
+
+Install plugin in main.js:
+
+```sh
+import { AVPlugin } from "vue-audio-visual";
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
