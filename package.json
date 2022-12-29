@@ -12,7 +12,8 @@
     "axios": "^1.2.1",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-audio-visual": "^3.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

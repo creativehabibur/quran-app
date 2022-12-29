@@ -28,27 +28,30 @@
 
         </div>
 
-        <div v-else class="flex -mx-4 mb-6">
-          <div class="flex-1 px-4">
-            <p class="flex items-center" v-if="currentSura.hasOwnProperty('ayahs')" v-for="ayah in currentSura.ayahs"><span class="text-xs inline-block mr-4 w-5 h-5 flex items-center justify-center border rounded-full">{{ ayah.numberInSurah }}</span> 
-              <span class="flex-1">
-                <span class="font-arabic">
-                  {{ ayah.text }}
-                </span><br>
-                
-              </span>
+        <div v-else class="text-4xl mt-8 text-slate-700 relative min-h-[20rem]">
+          <div class="px-4">
+            <p class="flex mb-8 text-right leading-[3rem]" v-if="currentSura.hasOwnProperty('ayahs')" v-for="(ayah, index) in  currentSura.ayahs" :key="ayah.index">
+
+
+
+
+
+
+
+
+
+              <span class="flex-1 text-end mr-4"><span class=" font-arabic">{{ ayah.text }} </span> <br>
+                <span class="text-lg font-bangla">{{ currentSurahBangla.ayahs[index].text }}</span> <br>
+                <span class="float-right">
+    <av-waveform :canv-height="0" :canv-width="0" :src="ayah.audio" symmetric="true"></av-waveform></span>
+</span>
+
+              <span class="text-xs self-baseline mr-4 w-10 h-10 flex text-right items-center justify-center border-4 border-lime-400 rounded-full">{{ ayah.numberInSurah }}</span>
+
             </p>
+
           </div>
-          <div class="flex-1 px-4">
-            <p class="flex items-center" v-if="currentSurahBangla.hasOwnProperty('ayahs')" v-for="ayah in currentSurahBangla.ayahs"><span class="text-xs inline-block mr-4 w-5 h-5 flex items-center justify-center border rounded-full">{{ ayah.numberInSurah }}</span> 
-              <span class="flex-1">
-                <span class="font-arabic">
-                  {{ ayah.text }}
-                </span><br>
-                
-              </span>
-            </p>
-          </div>
+
             
           </div>
 
@@ -85,15 +88,16 @@
       },
       querySpecificSura(suraNumber){
         this.loading = true;
-        axios.get('https://api.alquran.cloud/v1/surah/'+suraNumber).then(response => {
-          this.currentSura = response.data.data;
+        axios.get('https://api.alquran.cloud/v1/surah/' + suraNumber + '/editions/ar.alafasy,bn.bengali').then(response => {
+          this.currentSura = response.data.data[0];
+          this.currentSurahBangla = response.data.data[1];
           
           this.loading = false
         });
-        axios.get('https://api.alquran.cloud/v1/surah/'+suraNumber+'/editions/bn.bengali').then(response => {
-          this.currentSurahBangla = response.data.data[0];
-          this.loading = false
-        })
+        //axios.get('https://api.alquran.cloud/v1/surah/'+suraNumber+'/editions/bn.bengali').then(response => {
+          //this.currentSurahBangla = response.data.data[0];
+          //this.loading = false
+        //})
       }
     }
   };
