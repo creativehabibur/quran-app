@@ -27,3 +27,4 @@ yarn dev
 ```sh
 yarn build
 ```
+Demo Link : [Click here](https://quran-app-creativehabibur.vercel.app/)
