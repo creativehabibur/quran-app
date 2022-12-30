@@ -7,15 +7,15 @@
         <h1 class="text-center font-semibold text-3xl mb-4">Quran App</h1>
         <div class="flex -mx-4 items-center mb-6">
           <div class="flex-1 px-4">
-            <select @change="getSpecificSura" name="" id="" class="quran-input">
-              <option value="">Select Sura</option>
-              <option v-for="sura in suras" :value="sura.number">{{ sura.englishName }} - {{ sura.name }}</option>
+            <select @change="getSpecificSurah" name="" id="" class="quran-input">
+              <option value="">Select Surah</option>
+              <option v-for="surah in surahs" :value="surah.number">{{ surah.englishName }} - {{ surah.name }}</option>
             </select>
           </div>
 
           <div class="flex-1 px-4 text-center">
-            <h3 class="font-bold mb-1 text-lg">{{ currentSura.name }} - {{ currentSura.englishName }}</h3>
-            <p>{{ currentSura.englishNameTranslation }} | Ayahs - {{ currentSura.numberOfAyahs }}</p>
+            <h3 class="font-bold mb-1 text-lg">{{ currentSurah.name }} - {{ currentSurah.englishName }}</h3>
+            <p>{{ currentSurah.englishNameTranslation }} | Ayahs - {{ currentSurah.numberOfAyahs }}</p>
           </div>
           
         </div>
@@ -30,21 +30,14 @@
 
         <div v-else class="text-4xl mt-8 text-slate-700 relative min-h-[20rem]">
           <div class="px-4">
-            <p class="flex mb-8 text-right leading-[3rem]" v-if="currentSura.hasOwnProperty('ayahs')" v-for="(ayah, index) in  currentSura.ayahs" :key="ayah.index">
-
-
-
-
-
-
-
+            <p class="flex mb-8 text-right leading-[3rem]" v-if="currentSurah.hasOwnProperty('ayahs')" v-for="(ayah, index) in  currentSurah.ayahs" :key="ayah.index">
 
 
               <span class="flex-1 text-end mr-4"><span class=" font-arabic">{{ ayah.text }} </span> <br>
                 <span class="text-lg font-bangla">{{ currentSurahBangla.ayahs[index].text }}</span> <br>
                 <span class="float-right">
-    <av-waveform :canv-height="0" :canv-width="0" :src="ayah.audio" symmetric="true"></av-waveform></span>
-</span>
+                <av-waveform :canv-height="0" :canv-width="0" :src="ayah.audio" symmetric="true"></av-waveform></span>
+              </span>
 
               <span class="text-xs self-baseline mr-4 w-10 h-10 flex text-right items-center justify-center border-4 border-lime-400 rounded-full">{{ ayah.numberInSurah }}</span>
 
@@ -68,28 +61,28 @@
     name: 'App',
     data (){
       return {
-        suras: [],
-        currentSura: [],
+        surahs: [],
+        currentSurah: [],
         currentSurahBangla: [],
         loading: true
       }
     },
     mounted () {
       axios.get('https://api.alquran.cloud/v1/surah').then(response => {
-        this.suras = response.data.data
+        this.surahs = response.data.data
       })
 
-      this.querySpecificSura(1);
+      this.querySpecificSurah(1);
 
     },
     methods: {
-      getSpecificSura(e){
-        this.querySpecificSura(e.target.value);
+      getSpecificSurah(e){
+        this.querySpecificSurah(e.target.value);
       },
-      querySpecificSura(suraNumber){
+      querySpecificSurah(suraNumber){
         this.loading = true;
         axios.get('https://api.alquran.cloud/v1/surah/' + suraNumber + '/editions/ar.alafasy,bn.bengali').then(response => {
-          this.currentSura = response.data.data[0];
+          this.currentSurah = response.data.data[0];
           this.currentSurahBangla = response.data.data[1];
           
           this.loading = false
